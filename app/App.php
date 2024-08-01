@@ -84,9 +84,19 @@ class App{
      * @access public
      * @return string
      */
-    public static function getQhphpPath(): string
-    {
-        return ROOT_PATH.self::$path.'qhphp'.self::$path;
+    public static function getQhphpPath(): string {
+        $directories = [
+            ROOT_PATH . self::$path . 'vendor' . self::$path . 'qhthem' . self::$path . 'qhphp' . self::$path,
+            ROOT_PATH . self::$path . 'qhphp' . self::$path
+        ];
+    
+        foreach ($directories as $directory) {
+            if (is_dir($directory)) {
+                return $directory;
+            }
+        }
+        echo '获取应用运行时目录不存在！';
+        return ''; // 返回空字符串或者抛出异常
     }
     
     /**
