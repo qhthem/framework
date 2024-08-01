@@ -1,0 +1,19 @@
+{
+	"name": "qhphp",
+    "description": "the qhPHP Framework",
+    "type": "framework",
+    "keywords": ["framework","qhphp","ORM"],
+    "homepage": "http://thinkphp.cn/",
+    "license": "Apache-2.0",
+	
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "../app/",
+            "extend\\": "../extend/",
+            "qhphp\\": "./"
+        }
+    }
+}
