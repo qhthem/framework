@@ -1,8 +1,7 @@
 
 # QHPHP 青航框架 打造轻量型程序
 
-[![PHP Version](https://img.shields.io/badge/php-%3E%3D8.0-8892BF.svg)](http://www.php.net/)
-[![License](https://poser.pugx.org/topthink/framework/license)](https://packagist.org/packages/qhthem/qhphp)
+[![Latest Stable Version](http://poser.pugx.org/qhthem/qhphp/v)](https://packagist.org/packages/qhthem/qhphp) [![Total Downloads](http://poser.pugx.org/qhthem/qhphp/downloads)](https://packagist.org/packages/qhthem/qhphp) [![Latest Unstable Version](http://poser.pugx.org/qhthem/qhphp/v/unstable)](https://packagist.org/packages/qhthem/qhphp) [![License](http://poser.pugx.org/qhthem/qhphp/license)](https://packagist.org/packages/qhthem/qhphp) [![PHP Version Require](http://poser.pugx.org/qhthem/qhphp/require/php)](https://packagist.org/packages/qhthem/qhphp)
 
 ## 主要特性
 
