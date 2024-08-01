@@ -1,11 +1,9 @@
 {
-	"name": "qhphp",
-    "description": "the qhPHP Framework",
+   "name": "qhphp",
+    "description": "the QHPHP Framework",
     "type": "framework",
-    "keywords": ["framework","qhphp","ORM"],
-    
+    "keywords": ["framework","qhphp"],
     "license": "Apache-2.0",
-	
     "require": {
         "php": "^7.4 || ^8.0"
     },
