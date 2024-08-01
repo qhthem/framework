@@ -5,6 +5,7 @@
 ![AUR Version](https://img.shields.io/aur/version/qhthem)
 ![AUR License](https://img.shields.io/aur/license/qhthem)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.0-8892BF.svg)](http://www.php.net/)
+[![License](http://poser.pugx.org/qhthem/qhphp/license)](https://packagist.org/packages/qhthem/qhphp)
 
 ## 主要特性
 
