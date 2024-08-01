@@ -21,6 +21,28 @@
 ```
 composer create-project qhthem/framework
 ```
+## 宝塔安装
+
+1.新建一个网站，在目录下新建一个composer.json文件，然后在文件里面配置如下：
+
+```
+{
+    "require": {
+        "qhthem/qhphp": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app",
+            "extend\\": "extend"
+        }
+    }
+    
+}
+```
+2.然后回到网站列表，点击设置->其他设置->Composer->点击执行
+
+3.回到网站目录下已经安装完成了
+
 
 ## 参与开发
 
