@@ -3,7 +3,7 @@
 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/qhthem/qhphp/total)
 ![AUR Version](https://img.shields.io/aur/version/qhthem)
-[![License](https://poser.pugx.org/topthink/framework/license)]
+[![License](https://poser.pugx.org/topthink/framework/license)](https://packagist.org/packages/qhthem/qhphp)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.0-8892BF.svg)](http://www.php.net/)
 
 
