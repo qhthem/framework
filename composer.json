@@ -9,8 +9,8 @@
     },
     "autoload": {
         "psr-4": {
-            "app\\": "/app/",
-            "extend\\": "/extend/",
+            "app\\": "app",
+            "extend\\": "extend",
             "qhphp\\": "./"
         }
     }
