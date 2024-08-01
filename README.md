@@ -2,7 +2,7 @@
 # QHPHP 青航框架 打造轻量型程序
 
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.0-8892BF.svg)](http://www.php.net/)
-[![License](https://poser.pugx.org/qhthem/framework/license)]
+[![License](https://camo.githubusercontent.com/9f503ac28d8ee66f4b0217208821c73a5f95e7bd56b633439bd0888a2965457a/68747470733a2f2f706f7365722e707567782e6f72672f746f707468696e6b2f6672616d65776f726b2f6c6963656e7365)]
 
 ## 主要特性
 
