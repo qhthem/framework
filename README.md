@@ -2,7 +2,8 @@
 # QHPHP 青航框架 打造轻量型程序
 
 [![Latest Stable Version](http://poser.pugx.org/qhthem/qhphp/v)](https://packagist.org/packages/qhthem/qhphp) 
-[![Total Downloads](http://poser.pugx.org/qhthem/qhphp/downloads)](https://packagist.org/packages/qhthem/qhphp) 
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/qhthem/qhphp/total)
+
 [![Latest Unstable Version](http://poser.pugx.org/qhthem/qhphp/v/unstable)](https://packagist.org/packages/qhthem/qhphp) 
 [![License](http://poser.pugx.org/qhthem/qhphp/license)](https://packagist.org/packages/qhthem/qhphp) 
 [![PHP Version Require](http://poser.pugx.org/qhthem/qhphp/require/php)](https://packagist.org/packages/qhthem/qhphp)
