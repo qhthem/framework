@@ -1,5 +1,5 @@
 {
-	"name": "qhphp",
+    "name": "qhthem/qhphp",
     "description": "the qhPHP Framework",
     "type": "framework",
     "keywords": ["framework","qhphp","ORM"],
