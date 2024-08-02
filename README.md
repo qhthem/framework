@@ -21,7 +21,7 @@
 ## 快捷安装
 
 ```
-composer create-project qhthem/framework
+composer create-project qhthem/qhphp
 ```
 ## 宝塔安装
 
