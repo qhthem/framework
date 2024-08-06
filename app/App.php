@@ -220,12 +220,11 @@ class App{
     public static function AppRouter()
     {
         $Route_path = C('custom_route_path');
-        $rules = Cache()->get('Route');
-        if(empty($rules)){
-            if (is_file($Route_path)) {
+        if (is_file($Route_path)){
+            $data = cache_get_or_set('Route', function() use ($Route_path){
                 $data = include_once $Route_path;
-                Cache()->set('Route', $data,21600);
-            }
+                return $data;
+            }, 3600);
         }
     }
     
