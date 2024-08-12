@@ -15,7 +15,7 @@ if (!function_exists('Lang')) {
     function Lang($key, $langPath = '')
     {
         $lang = new Lang();
-        $langPaths = $langPath ? $langPath : ROOT_PATH . 'qhphp' . DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR;
+        $langPaths = $langPath ? $langPath : app()::getQhphpPath() . 'lang' . DIRECTORY_SEPARATOR;
         $lang->load($langPaths);
         return $lang->get($key);
     }
