@@ -41,7 +41,7 @@ if (!function_exists('url')) {
      * @param bool   $suffix    是否添加后缀
      * @return string 生成的 URL 链接
      */
-    function url($url = '', $vars = '', $domain = '/', $suffix = true) {
+    function url($url = '', $vars = '', $domain = '/', $suffix = true,$query = false) {
         $url = trim($url, '/');
         $arr = explode('/', $url);
         $num = count($arr);
@@ -65,8 +65,14 @@ if (!function_exists('url')) {
                 }
             }
         }
-
-        $string .= $suffix === true ? '.html' : $suffix;
+       if ($query) {
+            // 生成动态链接
+            $string = $url.'?' . http_build_query(array_merge($vars));
+        } else {
+            // 生成伪静态链接
+            $string .= $suffix === true ? '.html' : $suffix;
+        }
+        
 
         return $domain . $string;
     }
