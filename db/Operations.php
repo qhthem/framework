@@ -160,4 +160,31 @@ class Operations {
             return $this->insert($data);
         }
     }
+
+    /**
+     * 获取指定表和字段的值列表
+     *
+     * @param string $field 要查询的字段名
+     * @param string $table 要查询的表名
+     * @param PDO    $pdo   数据库连接对象
+     *
+     * @return array 查询到的值列表
+     * @author zhaosong
+     */    
+    public function column()
+    {
+        $sql = "SELECT {$this->field} FROM {$this->table}";
+        if (!empty($this->where)) {
+            $sql .= $this->where;
+        }
+        $stmt = $this->pdo->query($sql);
+        $this->debug_addmsg($sql);
+        
+        $values = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $values[] = $row[$this->field];
+        }
+
+        return $values;
+    } 
 }
