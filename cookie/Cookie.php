@@ -118,7 +118,7 @@ class Cookie
             // 删除Cookie，将其值设置为空字符串，并将过期时间设置为过去的时间
         }
     }
-    
+
     /**
      * 加密Cookie
      *
@@ -126,10 +126,12 @@ class Cookie
      * @param $key
      * @return string
      */
-    public function encryptCookie($data) {
-        $crypto = new SecureCrypto();
-        $ciphertext = $crypto->encrypt($data);
-        return $ciphertext;
+    public function encryptCookie($data)
+    {
+        $stringAuth = new StringAuth();
+        $encodedString = $stringAuth->string_auth($data, 'ENCODE');
+        
+        return $encodedString;
     }
     
     /**
@@ -139,10 +141,11 @@ class Cookie
      * @param $key
      * @return string|false
      */
-    public function decryptCookie($Data) {
-        $crypto = new SecureCrypto();
-        $ciphertext = $crypto->decrypt($Data);
-        return $ciphertext;
+    public function decryptCookie($data)
+    {
+        $stringAuth = new StringAuth();
+        $decodedString = $stringAuth->string_auth($data, 'DECODE');
+        
+        return $decodedString;
     }
-
 }
