@@ -9,7 +9,7 @@
 // | Author: ZHAOSONG <1716892803@qq.com>
 // +----------------------------------------------------------------------
 namespace qhphp\cookie;
-use qhphp\openssl\SecureCrypto;
+use qhphp\openssl\StringAuth;
 class Cookie
 {
     protected $path;
