@@ -9,74 +9,95 @@
 // | Author: ZHAOSONG <1716892803@qq.com>
 // +----------------------------------------------------------------------
 namespace qhphp\openssl;
-use Exception;
+
 /**
- * 使用 AES-256-GCM 密码学加密算法的安全加解密类。
+ * 字符串加密解密类
+ * @author zhaosong
  */
-class SecureCrypto {
-    
-    const CIPHER = 'aes-256-gcm';
-    const KEY_LENGTH = 32;
-
-    private $key = 'qwertyuioplkjhgfdsazxcvbnm1234567890';
+class StringAuth
+{
+    private $ckey_length = 4; // 密钥长度
+    private $key; // 主密钥
+    private $keya; // 密钥A
+    private $keyb; // 密钥B
+    private $keyc; // 密钥C
+    private $cryptkey; // 加密密钥
+    private $key_length; // 密钥长度
 
     /**
-     * 使用给定的密钥构造一个新的 SecureCrypto 对象。
-     *
-     * @param string $key 加密密钥，必须至少为 32 字节长。
-     *
-     * @throws Exception 如果密钥长度少于 32 字节。
+     * 构造函数
+     * @param string $key 用户提供的密钥，如果没有提供则使用默认密钥
+     * @return void
+     * @author zhaosong
      */
-    public function __construct() {
-        if (strlen($this->key)< self::KEY_LENGTH) {
-            throw new Exception('密钥长度必须至少为 ' . self::KEY_LENGTH . ' 字节。',404);
-        }
-
-        $this->key = substr($this->key, 0, self::KEY_LENGTH);
+    public function __construct($key = '')
+    {
+        $defaultKey = 'arBDnW9QAtUxg8lCGbX2U8tH7bXdpf58';
+        $this->key = md5($key != '' ? $key : $defaultKey);
+        $this->keya = md5(substr($this->key, 0, 16));
+        $this->keyb = md5(substr($this->key, 16, 16));
     }
 
     /**
-     * 使用 AES-256-GCM 密码学加密算法加密给定的明文。
-     *
-     * @param string $plaintext 要加密的明文。
-     *
-     * @return string 加密的密文。
-     *
-     * @throws Exception 如果加密失败。
+     * 字符串加密或解密
+     * @param string $string 需要加密或解密的字符串
+     * @param string $operation 操作类型，'ENCODE' 表示加密，'DECODE' 表示解密
+     * @param int $expiry 有效期，单位为秒，0 表示永久有效
+     * @return string 加密或解密后的字符串
+     * @author zhaosong
      */
-    public function encrypt($plaintext) {
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length(self::CIPHER));
-        $tag = '';
-        $ciphertext = openssl_encrypt($plaintext, self::CIPHER, $this->key, OPENSSL_RAW_DATA, $iv, $tag, '', 16);
 
-        if ($ciphertext === false || $tag === false) {
-            throw new Exception(Lang('Encryption failed' ),404);
+    public function string_auth($string, $operation = 'ENCODE', $expiry = 0)
+    {
+        if ($operation == 'DECODE') {
+            $this->keyc = substr($string, 0, $this->ckey_length);
+        } else {
+            $this->keyc = $this->ckey_length? substr(md5(microtime()), -$this->ckey_length) : '';
         }
 
-        return $iv . $ciphertext . $tag;
-    }
+        $this->cryptkey = $this->keya. md5($this->keya. $this->keyc);
+        $this->key_length = strlen($this->cryptkey);
 
-    /**
-     * 使用 AES-256-GCM 密码学加密算法解密给定的密文。
-     *
-     * @param string $ciphertext 要解密的密文。
-     *
-     * @return string 解密的明文。
-     *
-     * @throws Exception 如果解密失败。
-     */
-    public function decrypt($ciphertext) {
-        $iv_length = openssl_cipher_iv_length(self::CIPHER);
-        $iv = substr($ciphertext, 0, $iv_length);
-        $tag = substr($ciphertext, -16);
-        $ciphertext = substr($ciphertext, $iv_length, -16);
-
-        $plaintext = openssl_decrypt($ciphertext, self::CIPHER, $this->key, OPENSSL_RAW_DATA, $iv, $tag);
-
-        if ($plaintext === false) {
-            throw new Exception(Lang('Decryption failed' ),404);
+        if ($operation == 'DECODE') {
+            $string = base64_decode(strtr(substr($string, $this->ckey_length), '-_', '+/'));
+        } else {
+            $string = sprintf('%010d', $expiry? $expiry + time() : 0). substr(md5($string. $this->keyb), 0, 16). $string;
         }
 
-        return $plaintext;
+        $string_length = strlen($string);
+
+        $result = '';
+        $box = range(0, 255);
+
+        $rndkey = array();
+        for ($i = 0; $i <= 255; $i++) {
+            $rndkey[$i] = ord($this->cryptkey[$i % $this->key_length]);
+        }
+
+        for ($j = $i = 0; $i < 256; $i++) {
+            $j = ($j + $box[$i] + $rndkey[$i]) % 256;
+            $tmp = $box[$i];
+            $box[$i] = $box[$j];
+            $box[$j] = $tmp;
+        }
+
+        for ($a = $j = $i = 0; $i < $string_length; $i++) {
+            $a = ($a + 1) % 256;
+            $j = ($j + $box[$a]) % 256;
+            $tmp = $box[$a];
+            $box[$a] = $box[$j];
+            $box[$j] = $tmp;
+            $result.= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
+        }
+
+        if ($operation == 'DECODE') {
+            if ((substr($result, 0, 10) == 0 || intval(substr($result, 0, 10)) - time() > 0) && substr($result, 10, 16) == substr(md5(substr($result, 26). $this->keyb), 0, 16)) {
+                return substr($result, 26);
+            } else {
+                return '';
+            }
+        } else {
+            return $this->keyc. rtrim(strtr(base64_encode($result), '+/', '-_'), '=');
+        }
     }
 }
