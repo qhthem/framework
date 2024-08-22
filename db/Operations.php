@@ -187,4 +187,25 @@ class Operations {
 
         return $values;
     } 
+
+    /**
+     * 选择并返回多个表中的查询结果。
+     *
+     * @param array $tables 要查询的表名数组
+     * @return array 查询结果的二维数组
+     * @author zhaosong
+     */
+    public function selectResults(array $tables)
+    {
+        $data = [];
+        foreach ($tables as $table) {
+            $sql = "SELECT {$this->field} FROM {$table} {$this->where} {$this->order} {$this->limit}";
+            $this->debug_addmsg($sql);
+            $stmt = $this->pdo->query($sql);
+            $data[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    
+        return $data;
+    }
+    
 }
