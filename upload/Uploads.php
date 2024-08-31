@@ -40,6 +40,7 @@ class Uploads
                 'size' => C('upload_size'),
                 'ext' => C('upload_ext'),
                 'path' => C('upload_path'),
+                'is_name' => C('upload_is_name'),
             ];
         }
     }
@@ -64,7 +65,7 @@ class Uploads
         }
 
         // 生成文件名
-        $filename = md5(microtime(true)) . '.' . $ext;
+        $filename = $this->config['is_name'] ? $file['name'] . '.' . $ext:md5(microtime(true)) . '.' . $ext;
 
         // 创建目录
         $dir = $this->config['path'];
