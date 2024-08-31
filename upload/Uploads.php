@@ -65,7 +65,7 @@ class Uploads
         }
 
         // 生成文件名
-        $filename = $this->config['is_name'] ? $file['name'] . '.' . $ext:md5(microtime(true)) . '.' . $ext;
+        $filename = $this->config['is_name'] ? $file['name']:md5(microtime(true)) . '.' . $ext;
 
         // 创建目录
         $dir = $this->config['path'];
