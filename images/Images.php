@@ -226,7 +226,7 @@ class Images
             default:
                 throw new Exception('Invalid water position',404);
         }
-        imagecopy($this->image, $waterImage, $x, $y, 0, 0, $waterWidth, $waterHeight);
+        imagecopy($this->image, $waterImage, (int) $x, (int) $y, 0, 0, (int) $waterWidth, (int) $waterHeight);
         return $this;
     }
 
