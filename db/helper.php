@@ -3,6 +3,34 @@
 // | 数据库操作类助手函数
 // +----------------------------------------------------------------------
 use qhphp\db\Db;
+if (!function_exists('isDbConnected'))
+{
+    /**
+     * 判断数据库是否连接
+     *
+     * 该函数用于检查数据库是否已成功连接。通过尝试创建一个新的PDO实例来实现，
+     * 如果连接成功，则返回true；如果发生异常（例如连接失败），则捕获异常并返回false。
+     *
+     * @author zhaosong
+     * @return bool 数据库连接状态，true表示连接成功，false表示连接失败
+     */
+    function isDbConnected() {
+        $host = C('db_host');
+        $username = C('db_user');
+        $password = C('db_pwd');
+        $database = C('db_name');
+        
+        $dsn = "mysql:host={$host};dbname={$database}";
+        
+        try {
+            $conn = new PDO($dsn, $username, $password);
+            $conn = null;
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+}
 if (!function_exists('db')){
     /**
      * 用于实例化一个数据表对象  如：db('admin');
