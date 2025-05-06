@@ -131,13 +131,15 @@ class Router
         $original_rules = Cache()->get('Route');
         $new_rules = [];
         
-        foreach ($original_rules as $key => $rule) {
-            if(is_array($rule)){
-                foreach ($rule as $key => $value) {
-                    $new_rules[$key] = $value;
+        if(!empty($original_rules)){
+            foreach ($original_rules as $key => $rule) {
+                if(is_array($rule)){
+                    foreach ($rule as $key => $value) {
+                        $new_rules[$key] = $value;
+                    }
+                }else{
+                    $new_rules[$key] = $rule;
                 }
-            }else{
-                $new_rules[$key] = $rule;
             }
         }
         
