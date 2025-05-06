@@ -207,5 +207,69 @@ class Operations {
     
         return $data;
     }
+
+    /**
+     * 构建子查询SQL（不执行，只返回SQL字符串）
+     * @return string 子查询SQL
+     */
+    public function buildSql()
+    {
+        $sqlParts = [
+            "SELECT {$this->field} FROM {$this->table}",
+            $this->alias ? "AS {$this->alias}" : "",
+            $this->join ? "{$this->join}" : "",
+            $this->where ? "{$this->where}" : "",
+            $this->group ? "{$this->group}" : "",
+            $this->order ? "{$this->order}" : "",
+            $this->limit ? "{$this->limit}" : ""
+        ];
+        
+        $sql = implode(' ', array_filter($sqlParts));
+        
+        $this->reset();
+        
+        return "( $sql )";
+    }
+    
+    /**
+     * 重置查询条件
+     */
+    protected function reset()
+    {
+        $this->where = '';
+        $this->field = '*';
+        $this->order = '';
+        $this->limit = '';
+        $this->alias = '';
+        $this->join = '';
+        $this->group = '';
+    }
+    
+    
+    /**
+     * 添加原生 SQL 条件
+     * @param string $sql 原生SQL条件（可含占位符）
+     * @param array $bindings 参数绑定（可选）
+     * @return $this
+     */
+    public function whereRaw($sql, array $bindings = [])
+    {
+        // 处理参数绑定（防SQL注入）
+        if (!empty($bindings)) {
+            foreach ($bindings as $key => $value) {
+                $quoted = $this->pdo->quote($value);
+                $sql = preg_replace('/\?/', $quoted, $sql, 1);
+            }
+        }
+    
+        // 拼接 WHERE 条件
+        if ($this->where) {
+            $this->where .= " AND ($sql)";
+        } else {
+            $this->where = " WHERE ($sql)";
+        }
+        
+        return $this;
+    }
     
 }
